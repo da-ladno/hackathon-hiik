@@ -31,8 +31,28 @@
 }
 /*!sc*/
 
+header {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #e6e8fb;
+}
+
+
 .Map {
     width: 90%;
     max-width: 700px;
     margin: 0 auto;
+}
+
+.footer {
+    width: 100%;
+    max-height: 250px;
+    font: 12px Golos; 
+    text-align: center;
+    background: #e6e8fb;
+}
+.footertext {
+    padding: 10px;
 }
