@@ -1,10 +1,18 @@
+from typing import Tuple
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 from math import sqrt,atan,pi
 import httpx
 import pyproj
+import haversine as hs
 
 app = FastAPI()
+
+def distance_between(point1: Tuple[float, float], point2: Tuple[float, float]):
+    geod = pyproj.Geod(ellps='WGS84')
+    lons = [point1[0], point2[0]]
+    lats = [point1[1], point2[1]]
+    return hs.haversine(point1, point2, unit=hs.Unit.METERS)
 
 @app.get("/")
 async def root():
@@ -23,7 +31,7 @@ async def latlon_api(latitude: float, longitude: float, radius: int):
     azimuth4 = atan(-width/height)+pi
 
     pt2_lon, pt2_lat, _ = geod.fwd(longitude, latitude, azimuth2*180/pi, rect_diag)
-    pt4_lon, pt4_lat, _ = geod.fwd(longitude, latitude, azimuth4*180/pi, rect_diag)   
+    pt4_lon, pt4_lat, _ = geod.fwd(longitude, latitude, azimuth4*180/pi, rect_diag) 
 
     # Получаем список отделений в заданном радиусе используя API Почты России
     async with httpx.AsyncClient() as client:
@@ -50,5 +58,15 @@ async def latlon_api(latitude: float, longitude: float, radius: int):
             'limit': 10000
         }
         resp = await client.post('https://www.pochta.ru/offices', params=params, data=form_data)
-        j = resp.json()
-        return j
+        j = resp.json()['response']
+
+    # Фильтруем отделения дальше, чем указанный радиус
+    filtered_offices = []
+    for office in j['postOffices']:
+        if distance_between((float(office['latitude']), float(office['longitude'])), (latitude, longitude)) <= radius * 1000:
+            filtered_offices.append(office)
+
+    j['postOffices'] = filtered_offices
+    j['totalCount'] = len(filtered_offices)
+
+    return j
