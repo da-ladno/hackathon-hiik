@@ -1,4 +1,4 @@
-@font-face {
+﻿@font-face {
     font-family: "Golos";
     src: url("https://static.pochta.ru/fonts/Golos/v1.0.0/Golos-Text-Regular.eot");
     src: url("https://static.pochta.ru/fonts/Golos/v1.0.0/Golos-Text-Regular.eot?#iefix") format("embedded-opentype"), url("https://static.pochta.ru/fonts/Golos/v1.0.0/Golos-Text-Regular.woff2") format("woff2"), url("https://static.pochta.ru/fonts/Golos/v1.0.0/Golos-Text-Regular.ttf") format("truetype"), url("https://static.pochta.ru/fonts/Golos/v1.0.0/Golos-Text-Regular.svg#Golos") format("svg");
@@ -31,8 +31,13 @@
 }
 /*!sc*/
 
-.Map {
-    width: 90%;
-    max-width: 700px;
-    margin: 0 auto;
+.footer {
+    width: 100%;
+    max-height: 250px;
+    font: 12px Golos; 
+    text-align: center;
+    background: #e6e8fb;
+}
+.footertext {
+    padding: 10px;
 }
