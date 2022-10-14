@@ -20,7 +20,8 @@ def offices_list():
     return markup
 
 def is_address_reply(message):
-    return message.reply_to_message.text == 'Введите адрес в ответ на данное сообщение'
+    if message.reply_to_message:
+        return message.reply_to_message.text == 'Введите адрес в ответ на данное сообщение'
 
 @bot.message_handler(commands=['start', 'help'])
 def welcome_message(message):
