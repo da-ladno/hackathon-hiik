@@ -6,8 +6,14 @@ import httpx
 import pyproj
 import haversine as hs
 from datetime import datetime
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],
+)
 
 def distance_between(point1: Tuple[float, float], point2: Tuple[float, float]):
     geod = pyproj.Geod(ellps='WGS84')

@@ -46,15 +46,26 @@ header {
     margin: 0 auto;
 }
 
+body {
+    font-family: Golos, sans-serif;
+    font-size: 16px;
+    color: rgba(40, 39, 37, 0.94);
+}
+
+a:hover {
+    color: rgb(255, 90, 0);
+}
+
 .footer {
     width: 100%;
     max-height: 250px;
-    font: 12px Golos; 
+    color: rgb(127, 133, 166);
+    font: 14px Golos;   
     text-align: center;
     background: #e6e8fb;
 }
 .footertext {
-    padding: 10px;
+    padding: 20px;
 }
 
 .loader {
@@ -76,3 +87,4 @@ header {
         transform: rotate(360deg)
     }
 }
+

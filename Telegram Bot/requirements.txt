@@ -1,3 +1,5 @@
 dotenv
 requests
 pyTelegramBotApi
+pyproj
+haversine
