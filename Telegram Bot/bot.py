@@ -1,12 +1,21 @@
+from typing import List, Tuple
 import telebot
 from telebot import types
 import os
 from dotenv import load_dotenv
 import requests
+import pyproj
+import haversine as hs
 
 load_dotenv()
 
 bot = telebot.TeleBot(os.environ['TOKEN'], parse_mode=None)
+
+def distance_between(point1: Tuple[float, float], point2: Tuple[float, float]):
+    geod = pyproj.Geod(ellps='WGS84')
+    lons = [point1[0], point2[0]]
+    lats = [point1[1], point2[1]]
+    return hs.haversine(point1, point2, unit=hs.Unit.METERS)
 
 def main_menu():
     markup = types.ReplyKeyboardMarkup(row_width=1, one_time_keyboard=True)
@@ -15,8 +24,16 @@ def main_menu():
     markup.add(request_location_btn, request_address_btn)
     return markup
 
-def offices_list():
-    markup = types.ReplyKeyboardMarkup(one_time_keyboard=True, row_width=1)
+def offices_list(loc: Tuple[float, float], office_list: List):
+    # Сортируем отделения по удаленности и оставляем 5 ближайших
+    office_list.sort(key=lambda x: distance_between((float(x["latitude"]), float(x["longitude"])), (loc[0], loc[1])))
+    office_list = office_list[:5]
+
+    # Составляем клавиатуру отделений
+    markup = types.ReplyKeyboardMarkup(one_time_keyboard=False, row_width=1)
+    for office in office_list:
+        distance = int(distance_between( (float(office["latitude"]), float(office["longitude"])), (loc[0], loc[1]) ))
+        markup.add(types.KeyboardButton(f"✉️ {office['postalCode']} - {office['addressSource']} - {distance} м."))
     markup.add(types.KeyboardButton("Назад"))
     return markup
 
@@ -33,7 +50,11 @@ def welcome_message(message):
 def location_handler(message):
     lat = message.location.latitude
     lon = message.location.longitude
-    bot.send_message(message.chat.id, f"Полученные координаты: {lat},{lon}", reply_markup=offices_list())
+
+    # Получаем списки офисов через АПИ
+    resp = requests.get('http://localhost:8000/get_offices', params={'latitude': lat, "longitude": lon, "radius": 5}).json()
+
+    bot.send_message(message.chat.id, f"Найдено {resp['totalCount']} открытых отделений в радиусе 5 километров. Показаны 5 ближайших. Выберите отделение для получения подробной информации.", reply_markup=offices_list((lat, lon), resp['postOffices']))
 
 @bot.message_handler(regexp="✏️ Ввести адрес вручную")
 def address_handler(message):
