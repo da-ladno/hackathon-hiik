@@ -73,6 +73,8 @@ async def get_offices(latitude: float, longitude: float, radius: int):
         if distance_between((float(office['latitude']), float(office['longitude'])), (latitude, longitude)) <= radius * 1000:
             filtered_offices.append(office)
 
+    filtered_offices.sort(key=lambda x: distance_between((float(x["latitude"]), float(x["longitude"])), (latitude, longitude)))
+
     j['postOffices'] = filtered_offices
     j['totalCount'] = len(filtered_offices)
 
