@@ -6,6 +6,10 @@ from dotenv import load_dotenv
 import requests
 import pyproj
 import haversine as hs
+import re
+import time
+
+office_regex = r"✉️\s([0-9]{5,6})\s\-\s(.*)\s-\s([0-9]{1,})"
 
 load_dotenv()
 
@@ -68,7 +72,28 @@ def back_to_main_menu(message):
 @bot.message_handler(func=is_address_reply)
 def address_reply_handler(message):
     address = message.text
-    bot.send_message(message.chat.id, f"Полученный адрес: {address}", reply_markup=offices_list())
+
+    # Получаем координаты по адресу
+    resp = requests.get(f"https://geocode-maps.yandex.ru/1.x/?apikey={os.environ['YANDEX_API_KEY']}",
+                        params={"geocode": address, "format": "json"}).json()
+    print(resp)
+    try:
+        loc_str = resp["response"]["GeoObjectCollection"]["featureMember"][0]["GeoObject"]["Point"]["pos"]
+        lon, lat = float(loc_str.split()[0]), float(loc_str.split()[1])
+    except Exception:
+        bot.send_message(message.chat.id, "Не удалось получить информацию об адресе", reply_markup=main_menu())
+        return
+
+    # Получаем списки офисов через АПИ по координатам
+    resp = requests.get('http://localhost:8000/get_offices', params={'latitude': lat, "longitude": lon, "radius": 5}).json()
+    bot.send_message(message.chat.id, f"Найдено {resp['totalCount']} открытых отделений в радиусе 5 километров. Показаны 5 ближайших. Выберите отделение для получения подробной информации.", reply_markup=offices_list((lat, lon), resp['postOffices']))
+
+@bot.message_handler(regexp=office_regex)
+def office_click_handler(message):
+    postal_code = int(re.match(office_regex, message.text).group(1))
+    resp = requests.get('http://localhost:8000/get_office_info', params={"postal_code": postal_code, "local_time": int(time.time())}).json()
+    print(resp)
+    bot.send_message(message.chat.id, 'информация получена')
 
 @bot.message_handler(func=lambda x: True)
 def message_black_hole(message):
