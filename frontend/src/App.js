@@ -48,9 +48,9 @@ function App() {
   return (
     <div>
         <Header />
-        <MyMap res={res} pushRefs={pushRefs} setMapRef={setMapRef} mapCenter={mapCenter} circleGeometry={circleGeometry}/>
+        <MyMap res={res} pushRefs={pushRefs} setMapRef={setMapRef} mapCenter={mapCenter} circleGeometry={circleGeometry} refs={refs} setMarkRef={setMarkRef} markRef={markRef} markGeometry={markGeometry} setMarkGeometry={setMarkGeometry} />
         <div className={'findPanel'}>
-          <button onClick={() => { handleButtonClick(mapRef) }}>Найти</button>
+          <button onClick={() => { handleButtonClick(markRef) }}>Найти</button>
           <Slider />
         </div>
         <ul>
