@@ -13,7 +13,7 @@ office_regex = r"✉️\s([0-9]{5,6})\s\-\s(.*)\s-\s([0-9]{1,})"
 
 load_dotenv()
 
-bot = telebot.TeleBot(os.environ['TOKEN'], parse_mode=None)
+bot = telebot.TeleBot(os.environ['TOKEN'], parse_mode="markdown")
 
 def distance_between(point1: Tuple[float, float], point2: Tuple[float, float]):
     geod = pyproj.Geod(ellps='WGS84')
@@ -91,9 +91,27 @@ def address_reply_handler(message):
 @bot.message_handler(regexp=office_regex)
 def office_click_handler(message):
     postal_code = int(re.match(office_regex, message.text).group(1))
-    resp = requests.get('http://localhost:8000/get_office_info', params={"postal_code": postal_code, "local_time": int(time.time())}).json()
-    print(resp)
-    bot.send_message(message.chat.id, 'информация получена')
+    j = requests.get('http://localhost:8000/get_office_info', params={"postal_code": postal_code, "local_time": int(time.time())}).json()
+    message_output = f"✉️  Отделение почты {j['postalCode']} \n"
+    message_output += f"Адрес: {j['addressSource']} \n\n"
+    message_output += f"📅 Имеет расписание по дням: \n\n"
+    message_output += f"Понедельник: {'Закрыто' if not j['workingHours'][0]['beginWorkTime'] else j['workingHours'][0]['beginWorkTime'] + ' - ' +  j['workingHours'][0]['endWorkTime']} \n" 
+    message_output += f"Вторник: {'Закрыто' if not j['workingHours'][1]['beginWorkTime'] else j['workingHours'][1]['beginWorkTime'] + ' - ' +  j['workingHours'][1]['endWorkTime']}  \n" 
+    message_output += f"Среда: {'Закрыто' if not j['workingHours'][2]['beginWorkTime'] else j['workingHours'][2]['beginWorkTime'] + ' - ' +  j['workingHours'][2]['endWorkTime']}  \n" 
+    message_output += f"Четверг: {'Закрыто' if not j['workingHours'][3]['beginWorkTime'] else j['workingHours'][3]['beginWorkTime'] + ' - ' +  j['workingHours'][3]['endWorkTime']} \n" 
+    message_output += f"Пятница: {'Закрыто' if not j['workingHours'][4]['beginWorkTime'] else j['workingHours'][4]['beginWorkTime'] + ' - ' +  j['workingHours'][4]['endWorkTime']}  \n" 
+    message_output += f"Суббота: {'Закрыто' if not j['workingHours'][5]['beginWorkTime'] else j['workingHours'][5]['beginWorkTime'] + ' - ' +  j['workingHours'][5]['endWorkTime']}  \n" 
+    message_output += f"Воскресенье: {'Закрыто' if not j['workingHours'][6]['beginWorkTime'] else j['workingHours'][6]['beginWorkTime'] + ' - ' +  j['workingHours'][6]['endWorkTime']} \n" 
+    
+    lunches = set()
+    for hours in j['workingHours']:
+        if hours["beginWorkTime"] and hours["lunches"]:
+            lunches.append(hours["lunches"][0]["beginLunchTime"] + '-' + hours["lunches"][0]["endLunchTime"])
+    if len(lunches) == 1:        
+        message_output += f"⏳ Перерыв {lunches[0]}\n"
+    
+    location_msg = bot.send_location(message.chat.id, j["latitude"], j["longitude"], reply_to_message_id=message.id)
+    bot.send_message(message.chat.id, message_output, reply_to_message_id=location_msg.id)
 
 @bot.message_handler(func=lambda x: True)
 def message_black_hole(message):

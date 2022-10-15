@@ -62,9 +62,9 @@ async def get_offices(latitude: float, longitude: float, radius: int):
             'precision': 0,
             'onlyCoordinate': False,
             'offset': 0,
-            'limit': 500
+            'limit': 1000
         }
-        resp = await client.post('https://www.pochta.ru/offices', params=params, data=form_data)
+        resp = await client.post('https://www.pochta.ru/offices', params=params, data=form_data, timeout=30)
         j = resp.json()['response']
 
     # Фильтруем отделения дальше, чем указанный радиус
