@@ -3,8 +3,6 @@ import { YMaps, Map, GeolocationControl, Placemark ,Circle} from "@pbe/react-yan
 
 const MyMap = ({res, pushRefs, setMapRef, mapCenter, circleGeometry}) => {
 
-  let ymaps;
-
   return (
     <YMaps query={{
       apikey: 'c970de01-d938-407e-b299-61a64e4c9c13',
@@ -22,8 +20,8 @@ const MyMap = ({res, pushRefs, setMapRef, mapCenter, circleGeometry}) => {
              geometry={[office.latitude,office.longitude]}
              options={{
               iconLayout: "default#image",
-              iconImageSize: [30, 30],
-              iconImageHref: 'https://downloader.disk.yandex.ru/preview/fd086279742c21ccdc0fd4b25aea361ef40759faab58cd1a97371fe3f8d426f9/6349b4ba/t4IeJvhNW9kcJWI5-EScOY2KNdfqEl2-0xT1pUJcPJp78I11pK0hwwPprLxEnQx23qglofmE1OR9PLpdcaXIYw%3D%3D?uid=0&filename=37_picture_ba348328.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=0&tknv=v2&size=1053x830'
+              iconImageSize: [30, 42],
+              iconImageHref: 'https://downloader.disk.yandex.ru/preview/5ce2d080cd371a356edc32e6c44c7116e703718b73f1c0ab6968063e1d615b2a/634a5c6a/wCspxMMkxsL6f_0ar6LfEYqhZPGle17k9vruW6spBAsbZHkK9PfbUuuDJrkjPJVbzLcp_zsT8DW2MpQxu59oAQ%3D%3D?uid=0&filename=PochtaRossiiMarkBlue.png&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=2048x2048'
             }}
             instanceRef={inst => {pushRefs(inst)}}
              />

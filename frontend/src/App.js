@@ -3,7 +3,6 @@ import Footer from "./components/Footer"
 import './style.css'
 import './normalize.css'
 import Header from "./components/Header";
-import response from "./static/json/response";
 import Loader from "./components/Loader";
 import { useState } from "react";
 
@@ -26,9 +25,9 @@ function App() {
 
   const handleClick = (refs,index,office) => {
     refs.forEach(ref => {
-      ref.options.set('iconImageSize', [30, 30])
+      ref.options.set('iconImageHref', 'https://downloader.disk.yandex.ru/preview/5ce2d080cd371a356edc32e6c44c7116e703718b73f1c0ab6968063e1d615b2a/634a5c6a/wCspxMMkxsL6f_0ar6LfEYqhZPGle17k9vruW6spBAsbZHkK9PfbUuuDJrkjPJVbzLcp_zsT8DW2MpQxu59oAQ%3D%3D?uid=0&filename=PochtaRossiiMarkBlue.png&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=2048x2048')
     });
-    refs[index].options.set('iconImageSize', [48, 48])
+    refs[index].options.set('iconImageHref', 'https://downloader.disk.yandex.ru/preview/b919c9c777b71952bf22aac68a72dc0a09f43f67abc6d165e3b78a4f574d3cca/634a5cd8/kEo5E0lZYv6lO_fMO-4tT4qhZPGle17k9vruW6spBAtpyEBxwanIj0rl9eW9y0cPf09LceQz656FiBPwcw4-tg%3D%3D?uid=0&filename=PochtaRossiiMarkRed.png&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=2048x2048')
     mapRef.setCenter([office.latitude,office.longitude])
   }
   
