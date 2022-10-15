@@ -10,6 +10,7 @@ import { useState } from "react";
 function App() {
 
   const [mapCenter,setMapCenter] = useState([55.75, 37.57])
+  const [circleGeometry,setCircleGeometry] = useState([0, 0])
   const [res,setRes] = useState([]);
   const [isLoading, setIsLoading] = useState(false)
   const refs = [];
@@ -35,13 +36,13 @@ function App() {
     const [latitude, longitude] = mapRef.getCenter();
     fetch(`http://92.37.244.143:8000/get_offices?latitude=${latitude}&longitude=${longitude}&radius=5`)
       .then((response) => response.json())
-      .then((data) => {setRes(data.postOffices); mapRef.setCenter([latitude,longitude])})
+      .then((data) => {setRes(data.postOffices); setMapCenter([latitude,longitude]); setCircleGeometry([latitude,longitude]) })
   }
 
   return (
     <div>
         <Header />
-        <MyMap res={res} pushRefs={pushRefs} setMapRef={setMapRef} mapCenter={mapCenter}/>
+        <MyMap res={res} pushRefs={pushRefs} setMapRef={setMapRef} mapCenter={mapCenter} circleGeometry={circleGeometry}/>
         <button onClick={() => {handleButtonClick(mapRef)}}>Найти</button>
         <ul>
           {res.map((office,index) => 

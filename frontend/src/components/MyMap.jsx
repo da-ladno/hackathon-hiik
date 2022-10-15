@@ -1,9 +1,9 @@
 import React  from 'react'
-import { YMaps, Map, GeolocationControl, Placemark } from "@pbe/react-yandex-maps";
+import { YMaps, Map, GeolocationControl, Placemark ,Circle} from "@pbe/react-yandex-maps";
 
-const MyMap = ({res, pushRefs, setMapRef, mapCenter}) => {
+const MyMap = ({res, pushRefs, setMapRef, mapCenter, circleGeometry}) => {
 
-  
+  let ymaps;
 
   return (
     <YMaps query={{
@@ -28,6 +28,14 @@ const MyMap = ({res, pushRefs, setMapRef, mapCenter}) => {
             instanceRef={inst => {pushRefs(inst)}}
              />
           )}
+          <Circle geometry={[circleGeometry, 5000]} options={{
+            draggable: false,
+            fillColor: '#CAE3FF',
+            strokeColor: '#0064DC',
+            strokeOpacity: 0.8,
+            strokeWidth: 5,
+            fillOpacity: 0.4
+          }} />
         </Map>
     </div>
   </YMaps>
