@@ -32,6 +32,7 @@ function App() {
   }
   
   const handleButtonClick = async (mapRef) => {
+    setRes([])
     const [latitude, longitude] = mapRef.getCenter();
     fetch(`http://92.37.244.143:8000/get_offices?latitude=${latitude}&longitude=${longitude}&radius=5`)
       .then((response) => response.json())
