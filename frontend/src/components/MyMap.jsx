@@ -1,7 +1,7 @@
 import React  from 'react'
 import { YMaps, Map, GeolocationControl, Placemark } from "@pbe/react-yandex-maps";
 
-const MyMap = ({res, pushRefs, setMapRef}) => {
+const MyMap = ({res, pushRefs, setMapRef, mapCenter}) => {
 
   
 
@@ -10,7 +10,7 @@ const MyMap = ({res, pushRefs, setMapRef}) => {
       apikey: 'c970de01-d938-407e-b299-61a64e4c9c13',
     }}>
     <div className='Map'>
-        <Map state={{center:[55.75, 37.57],zoom:9}} width="100%" height="400px" modules={["geolocation", "geocode"]} instanceRef={inst => {setMapRef(inst)}} >
+        <Map state={{center:mapCenter,zoom:9}} width="100%" height="400px" modules={["geolocation", "geocode"]} instanceRef={inst => {setMapRef(inst)}} >
           <GeolocationControl options={{
             float: 'left'
           }}

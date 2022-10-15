@@ -4,10 +4,14 @@ import './style.css'
 import './normalize.css'
 import Header from "./components/Header";
 import response from "./static/json/response";
+import Loader from "./components/Loader";
+import { useState } from "react";
 
 function App() {
 
-  const res = response.postOffices
+  const [mapCenter,setMapCenter] = useState([55.75, 37.57])
+  const [res,setRes] = useState([]);
+  const [isLoading, setIsLoading] = useState(false)
   const refs = [];
   let mapRef;
 
@@ -26,11 +30,19 @@ function App() {
     refs[index].options.set('iconImageSize', [48, 48])
     mapRef.setCenter([office.latitude,office.longitude])
   }
+  
+  const handleButtonClick = async (mapRef) => {
+    const [latitude, longitude] = mapRef.getCenter();
+    fetch(`http://92.37.244.143:8000/get_offices?latitude=${latitude}&longitude=${longitude}&radius=5`)
+      .then((response) => response.json())
+      .then((data) => {setRes(data.postOffices); mapRef.setCenter([latitude,longitude])})
+  }
 
   return (
     <div>
         <Header />
-        <MyMap res={res} pushRefs={pushRefs} setMapRef={setMapRef}/>
+        <MyMap res={res} pushRefs={pushRefs} setMapRef={setMapRef} mapCenter={mapCenter}/>
+        <button onClick={() => {handleButtonClick(mapRef)}}>Найти</button>
         <ul>
           {res.map((office,index) => 
             <li key={office.postalCode} onClick={() => {handleClick(refs,index,office)}}>{office.address.fullAddress}</li>
