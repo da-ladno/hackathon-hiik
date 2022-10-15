@@ -106,9 +106,9 @@ def office_click_handler(message):
     lunches = set()
     for hours in j['workingHours']:
         if hours["beginWorkTime"] and hours["lunches"]:
-            lunches.append(hours["lunches"][0]["beginLunchTime"] + '-' + hours["lunches"][0]["endLunchTime"])
+            lunches.add(hours["lunches"][0]["beginLunchTime"] + '-' + hours["lunches"][0]["endLunchTime"])
     if len(lunches) == 1:        
-        message_output += f"⏳ Перерыв {lunches[0]}\n"
+        message_output += f"\n⏳ Перерыв {list(lunches)[0]}\n"
     
     location_msg = bot.send_location(message.chat.id, j["latitude"], j["longitude"], reply_to_message_id=message.id)
     bot.send_message(message.chat.id, message_output, reply_to_message_id=location_msg.id)
