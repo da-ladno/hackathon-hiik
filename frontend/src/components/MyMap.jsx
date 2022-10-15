@@ -1,16 +1,16 @@
 import React  from 'react'
-import { YMaps, Map, GeolocationControl, Placemark } from "@pbe/react-yandex-maps";
+import { YMaps, Map, GeolocationControl, Placemark ,Circle} from "@pbe/react-yandex-maps";
 
-const MyMap = ({res, pushRefs, setMapRef}) => {
+const MyMap = ({res, pushRefs, setMapRef, mapCenter, circleGeometry}) => {
 
-  
+  let ymaps;
 
   return (
     <YMaps query={{
       apikey: 'c970de01-d938-407e-b299-61a64e4c9c13',
     }}>
     <div className='Map'>
-        <Map state={{center:[55.75, 37.57],zoom:9}} width="100%" height="400px" modules={["geolocation", "geocode"]} instanceRef={inst => {setMapRef(inst)}} >
+        <Map state={{center:mapCenter,zoom:9}} width="100%" height="400px" modules={["geolocation", "geocode"]} instanceRef={inst => {setMapRef(inst)}} >
           <GeolocationControl options={{
             float: 'left'
           }}
@@ -28,6 +28,14 @@ const MyMap = ({res, pushRefs, setMapRef}) => {
             instanceRef={inst => {pushRefs(inst)}}
              />
           )}
+          <Circle geometry={[circleGeometry, 5000]} options={{
+            draggable: false,
+            fillColor: '#CAE3FF',
+            strokeColor: '#0064DC',
+            strokeOpacity: 0.8,
+            strokeWidth: 5,
+            fillOpacity: 0.4
+          }} />
         </Map>
     </div>
   </YMaps>

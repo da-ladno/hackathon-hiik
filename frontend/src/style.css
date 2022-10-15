@@ -68,3 +68,23 @@ a:hover {
     padding: 20px;
 }
 
+.loader {
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    border-top: 3px solid blue;
+    border-right: 3px solid blue;
+    margin: 20px auto;
+    animation: 800ms infinite linear rotate;
+}
+
+@keyframes rotate {
+    0%{
+        transform: rotate(0);
+    }
+
+    100% {
+        transform: rotate(360deg)
+    }
+}
+
