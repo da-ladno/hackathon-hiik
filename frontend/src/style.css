@@ -41,7 +41,7 @@ header {
 
 
 .Map {
-    padding: 25px 0px 0px 0px;
+    padding: 20px 0px 20px 0px;
     width: 90%;
     max-width: 700px;
     margin: 0 auto;
@@ -51,6 +51,7 @@ body {
     font-family: Golos, sans-serif;
     font-size: 16px;
     color: rgba(40, 39, 37, 0.94);
+    line-height: 20px;
 }
 
 a:hover {
@@ -65,6 +66,7 @@ a:hover {
     text-align: center;
     background: #e6e8fb;
 }
+
 .footertext {
     padding: 20px;
 }
@@ -77,6 +79,71 @@ a:hover {
     border-right: 3px solid blue;
     margin: 20px auto;
     animation: 800ms infinite linear rotate;
+}
+
+.findPanel {
+    line-height:50px;
+    margin: 0px 0px 0px 5%;
+    text-align:center;
+    width:90%;
+    min-width:300px;
+    align-content: space-between;
+}
+
+button {
+    box-sizing: border-box;
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+    border: none;
+    transition: color 0.2s ease 0s, background-color 0.2s ease 0s;
+    user-select: none;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    font-family: Golos, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: normal;
+    line-height: 18px;
+    padding: 10px 20px 10px 20px;
+    margin: 0px;
+    border-radius: 6px;
+    color: rgba(255, 255, 255, 0.94);
+    background: rgb(25, 55, 255);
+}
+
+button:active {
+    color: rgba(255, 255, 255, 0.94);
+    background: rgb(26, 50, 209);
+}
+
+.slider {
+    padding: 5px 15px 5px 15px;
+}
+
+.slider input {
+    -webkit-appearance:none !important;
+    max-width: 500px;
+    width:25%;
+    min-width: 200px;
+    height: 3px;
+    border-radius: 5px;
+    background: rgb(26, 50, 209);
+    outline: none;
+}
+.slider input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    width: 45px;
+    height: 45px;
+    background: white;
+    border: 8px solid rgb(26, 50, 209);
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+.slider input[type="range"]::-webkit-slider-thumb:active {
+    border-color: rgb(76, 100, 259)
 }
 
 @keyframes rotate {

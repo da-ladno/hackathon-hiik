@@ -5,9 +5,9 @@ import './normalize.css'
 import Header from "./components/Header";
 import Loader from "./components/Loader";
 import { useState } from "react";
+import Slider from "./components/Slider";
 
 function App() {
-
   const [mapCenter,setMapCenter] = useState([55.75, 37.57])
   const [circleGeometry,setCircleGeometry] = useState([0, 0])
   const [markGeometry,setMarkGeometry] = useState([0, 0])
@@ -16,7 +16,6 @@ function App() {
   const refs = [];
   let mapRef;
   let markRef;
-
   const pushRefs = (inst) => {
     refs.push(inst)
   }
@@ -49,8 +48,11 @@ function App() {
   return (
     <div>
         <Header />
-        <MyMap res={res} pushRefs={pushRefs} setMapRef={setMapRef} mapCenter={mapCenter} circleGeometry={circleGeometry} refs={refs} setMarkRef={setMarkRef} markRef={markRef} markGeometry={markGeometry} setMarkGeometry={setMarkGeometry}/>
-        <button onClick={() => {handleButtonClick(markRef)}}>Найти</button>
+        <MyMap res={res} pushRefs={pushRefs} setMapRef={setMapRef} mapCenter={mapCenter} circleGeometry={circleGeometry}/>
+        <div className={'findPanel'}>
+          <button onClick={() => { handleButtonClick(mapRef) }}>Найти</button>
+          <Slider />
+        </div>
         <ul>
           {res.map((office,index) => 
             <li key={office.postalCode} onClick={() => {handleClick(refs,index,office)}}>{office.address.fullAddress}</li>
