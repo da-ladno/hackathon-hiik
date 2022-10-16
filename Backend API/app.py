@@ -20,19 +20,17 @@ app.add_middleware(
     allow_origins=['*'],
 )
 
+# Подсчет расстояния между двумя координатами в метрах
 def distance_between(point1: Tuple[float, float], point2: Tuple[float, float]):
-    geod = pyproj.Geod(ellps='WGS84')
-    lons = [point1[0], point2[0]]
-    lats = [point1[1], point2[1]]
     return hs.haversine(point1, point2, unit=hs.Unit.METERS)
 
+# Функция для определения, закрыто или открыто отделение
 def is_closed(office):
     tz = pytz.timezone(tf.timezone_at(lat=float(office['latitude']), lng=float(office['longitude'])))
     local_datetime = datetime.fromtimestamp(time.time(), tz)
     local_time = datetime.strptime(f'{local_datetime.hour}:{local_datetime.minute}', "%H:%M")
     weekday = local_datetime.weekday()
 
-    # print(office)
     if len(office['workingHours']) - 1 >= weekday:
         working_hours = office['workingHours'][weekday]
     else:
@@ -45,9 +43,6 @@ def is_closed(office):
     lunches = office['workingHours'][weekday]["lunches"]
     if lunches:
         lunch_time = (datetime.strptime(lunches[0]["beginLunchTime"], "%H:%M"), datetime.strptime(lunches[0]["endLunchTime"], "%H:%M")) 
-
-    #print(work_time)
-    #print(local_time)
 
     if ((
         local_time >= work_time[0]
@@ -62,10 +57,8 @@ def is_closed(office):
     )) or (
         work_time == ((0, 0), (0, 0))
     ):
-        #print(False)
         return False
 
-    #print(True)
     return True
 
 
