@@ -81,19 +81,8 @@ a:hover {
     animation: 800ms infinite linear rotate;
 }
 
-.findPanel {
-    line-height:50px;
-    margin: 0px 0px 0px 5%;
-    text-align:center;
-    width:90%;
-    min-width:300px;
-    align-content: space-between;
-}
-
 button {
     box-sizing: border-box;
-    position: relative;
-    display: inline-block;
     max-width: 100%;
     border: none;
     transition: color 0.2s ease 0s, background-color 0.2s ease 0s;
@@ -118,32 +107,81 @@ button:active {
     background: rgb(26, 50, 209);
 }
 
+
+.findPanel {
+    padding-bottom: 15px;
+    line-height: 10px;
+    margin: 0px 0px 0px 5%;
+    width: 90%;
+    min-width: 300px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    grid-template-columns: 100px auto;
+}
+
+.findButton {
+    margin-top: 15px;
+}
+
 .slider {
-    padding: 5px 15px 5px 15px;
+    padding: 3px 15px 0px 5px;
+    display: flex;
+    grid-template-columns: auto auto auto;
 }
 
 .slider input {
     -webkit-appearance:none !important;
-    max-width: 500px;
-    width:25%;
-    min-width: 200px;
-    height: 3px;
-    border-radius: 5px;
-    background: rgb(26, 50, 209);
-    outline: none;
+    width: 100%;
+    max-width: 300px;
+    min-width: 250px;
 }
 .slider input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none !important;
-    width: 45px;
-    height: 45px;
+    margin: -10px 0px;
+    width: 35px;
+    height: 35px;
     background: white;
-    border: 8px solid rgb(26, 50, 209);
+    border: 7px solid rgb(16, 20, 199);
     border-radius: 100%;
     cursor: pointer;
+    transition: 0.1s ease-in-out;
 }
 
 .slider input[type="range"]::-webkit-slider-thumb:active {
     border-color: rgb(76, 100, 259)
+}
+
+.slider input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 12px;
+    cursor: pointer;
+    background: rgb(25, 55, 255);
+    border-radius: 6px;
+}
+
+.sliderValues {
+    font-size: 12pt;
+    width: 100%;
+    max-width: 200px;
+    min-width: 200px;
+    margin-bottom: -9px;
+    padding-left: 12px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.sliderValues option {
+    position: center;
+    padding-right: 10.8px;
+    margin-left: 4px;
+}
+
+.sliderText {
+    display: inline;
+    margin-left: 10px;
+    margin-top: 14px;
 }
 
 @keyframes rotate {
