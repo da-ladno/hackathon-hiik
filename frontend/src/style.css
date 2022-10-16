@@ -101,12 +101,14 @@ button {
     border-radius: 6px;
     color: rgba(255, 255, 255, 0.94);
     background: rgb(25, 55, 255);
+    
 }
 
-button:active {
-    color: rgba(255, 255, 255, 0.94);
-    background: rgb(26, 50, 209);
-}
+    button:active {
+        color: rgba(255, 255, 255, 0.94);
+        background: rgb(26, 50, 209);
+       
+    }
 
 
 .findPanel {
@@ -208,8 +210,8 @@ button:active {
     justify-content: center;
     align-items: center;
     max-height:400px;
-  
-    overflow-y:scroll;
+    
+    overflow-y:auto;
 }
 
     .tableList li:hover {
@@ -273,9 +275,11 @@ button:active {
                 height: 40px;
             }
 .tableList::-webkit-scrollbar {
-    width: 15px; /* ширина для вертикального скролла */
+    width: none; /* ширина для вертикального скролла */
+    
     height: 4px; /* высота для горизонтального скролла */
-    background-color: #d8cece65;
+    background-color: #e6e8fb;
+    
 }
 
 /* ползунок скроллбара */
