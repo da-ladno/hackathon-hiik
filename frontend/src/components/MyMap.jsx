@@ -76,7 +76,7 @@ const MyMap = ({res,
             options={{
             iconLayout: "default#image",
             iconImageSize: badGeo[1],
-            iconImageHref: 'https://downloader.disk.yandex.ru/preview/b919c9c777b71952bf22aac68a72dc0a09f43f67abc6d165e3b78a4f574d3cca/634a5cd8/kEo5E0lZYv6lO_fMO-4tT4qhZPGle17k9vruW6spBAtpyEBxwanIj0rl9eW9y0cPf09LceQz656FiBPwcw4-tg%3D%3D?uid=0&filename=PochtaRossiiMarkRed.png&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=2048x2048',
+            iconImageHref: 'PochtaRossiiMarkRed.png',
             zIndex:1000 
           }}
           />

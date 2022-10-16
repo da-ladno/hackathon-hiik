@@ -56,9 +56,9 @@ function App() {
   }
 
   return (
-    <div>
-      <div className="wrap">
-        <Header />
+    <div className="wrap">
+      <Header />
+      <div className="main">
         <div className="main">
         <MyMap res={res} 
         setMapRef={setMapRef} 
@@ -86,10 +86,11 @@ function App() {
                     <li key={office.postalCode} onClick={() => {handleClick(index,office)}}>{office.address.fullAddress === '' ? 'Адрес неизвестен' : office.address.fullAddress}</li>
                 )}
             </ol>
-            </div>
-            </div>
-        <Footer />
-        <Modal active={active} setActive={setActive} setBadGeo={setBadGeo} modalObject={modalObject}/>
+        </div>
+        
+      </div>
+      <Footer />
+      <Modal active={active} setActive={setActive} setBadGeo={setBadGeo} modalObject={modalObject}/>
     </div>
   );
 }

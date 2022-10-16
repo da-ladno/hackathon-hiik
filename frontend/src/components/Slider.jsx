@@ -20,7 +20,7 @@ function Slider({sliderValue, setInputValue}) {
                 </datalist>
                 <input className={'slider'} type='range' min='1' max='10' value={sliderValue} step='1' onChange={handleChange} />
             </div>
-            {/* <div className={'sliderText'}>км</div> */}
+            {/* <div className={'sliderText'}>км</div> */}  
         </div>
     );
 }
