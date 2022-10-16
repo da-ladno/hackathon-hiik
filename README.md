@@ -3,4 +3,4 @@
 
 Telegram bot - https://t.me/FindPochtaBot
 
-Web application - https://www.teamdlok.site
+Web application - http://176.126.103.192/
