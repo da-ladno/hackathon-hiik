@@ -50,7 +50,7 @@ function App() {
   const handleButtonClick = async (markRef, refs) => {
     setRes([])
     const [latitude, longitude] = markRef.geometry.getCoordinates();
-    fetch(`http://92.37.244.143:8000/get_offices?latitude=${latitude}&longitude=${longitude}&radius=${sliderValue}`)
+    fetch(`http://176.126.103.192:8000/get_offices?latitude=${latitude}&longitude=${longitude}&radius=${sliderValue}`)
       .then((response) => response.json())
       .then((data) => {setRes(data.postOffices); setMapCenter([latitude,longitude])})
   }
@@ -76,14 +76,17 @@ function App() {
         setModalObject={setModalObject}
         />
         <div className={'findPanel'}>
-          <button onClick={() => { handleButtonClick(markRef) }}>Найти</button>
+          <div className={'findButton'}><button onClick={() => { handleButtonClick(markRef) }}>Найти</button></div>
           <Slider sliderValue={sliderValue} setInputValue={setInputValue}/>
         </div>
-        <ul>
-          {res.map((office,index) => 
-            <li key={office.postalCode} onClick={() => {handleClick(index,office)}}>{office.address.fullAddress}</li>
-          )}
-        </ul>
+        <div className="tableList">
+              <div className="box">
+                  <ol className="square">
+                      {res.map((office, index) =>
+                          <li key={office.postalCode} onClick={() => {handleClick(index,office)}}>{office.address.fullAddress}</li>
+                      )}
+                  </ol> </div>
+          </div> 
         <Footer />
         <Modal active={active} setActive={setActive} setBadGeo={setBadGeo} modalObject={modalObject}/>
     </div>

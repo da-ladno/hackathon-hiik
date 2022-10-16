@@ -21,6 +21,7 @@ def distance_between(point1: Tuple[float, float], point2: Tuple[float, float]):
     lats = [point1[1], point2[1]]
     return hs.haversine(point1, point2, unit=hs.Unit.METERS)
 
+# Функция, возвращающая клавиатуру главного меню
 def main_menu():
     markup = types.ReplyKeyboardMarkup(row_width=1, one_time_keyboard=True)
     request_location_btn = types.KeyboardButton("📍 Отправить текущее местоположение", request_location=True)
@@ -28,6 +29,7 @@ def main_menu():
     markup.add(request_location_btn, request_address_btn)
     return markup
 
+# Функция, составляющая клавиатуру списка ближайших отделений
 def offices_list(loc: Tuple[float, float], office_list: List):
     # Сортируем отделения по удаленности и оставляем 5 ближайших
     office_list.sort(key=lambda x: distance_between((float(x["latitude"]), float(x["longitude"])), (loc[0], loc[1])))
@@ -90,8 +92,11 @@ def address_reply_handler(message):
 
 @bot.message_handler(regexp=office_regex)
 def office_click_handler(message):
+    # Получаем информацию об отделении через API
     postal_code = int(re.match(office_regex, message.text).group(1))
     j = requests.get('http://localhost:8000/get_office_info', params={"postal_code": postal_code, "local_time": int(time.time())}).json()
+
+    # Составляем сообщение с информацией об отделении
     message_output = f"✉️  Отделение почты {j['postalCode']} \n"
     message_output += f"Адрес: {j['addressSource']} \n\n"
     message_output += f"📅 Имеет расписание по дням: \n\n"
@@ -100,9 +105,12 @@ def office_click_handler(message):
     message_output += f"Среда: {'Закрыто' if not j['workingHours'][2]['beginWorkTime'] else j['workingHours'][2]['beginWorkTime'] + ' - ' +  j['workingHours'][2]['endWorkTime']}  \n" 
     message_output += f"Четверг: {'Закрыто' if not j['workingHours'][3]['beginWorkTime'] else j['workingHours'][3]['beginWorkTime'] + ' - ' +  j['workingHours'][3]['endWorkTime']} \n" 
     message_output += f"Пятница: {'Закрыто' if not j['workingHours'][4]['beginWorkTime'] else j['workingHours'][4]['beginWorkTime'] + ' - ' +  j['workingHours'][4]['endWorkTime']}  \n" 
-    message_output += f"Суббота: {'Закрыто' if not j['workingHours'][5]['beginWorkTime'] else j['workingHours'][5]['beginWorkTime'] + ' - ' +  j['workingHours'][5]['endWorkTime']}  \n" 
-    message_output += f"Воскресенье: {'Закрыто' if not j['workingHours'][6]['beginWorkTime'] else j['workingHours'][6]['beginWorkTime'] + ' - ' +  j['workingHours'][6]['endWorkTime']} \n" 
+    if len(j['workingHours']) >= 6:
+        message_output += f"Суббота: {'Закрыто' if not j['workingHours'][5]['beginWorkTime'] else j['workingHours'][5]['beginWorkTime'] + ' - ' +  j['workingHours'][5]['endWorkTime']}  \n" 
+    if len(j['workingHours']) >= 7:
+        message_output += f"Воскресенье: {'Закрыто' if not j['workingHours'][6]['beginWorkTime'] else j['workingHours'][6]['beginWorkTime'] + ' - ' +  j['workingHours'][6]['endWorkTime']} \n" 
     
+    # Определяем перерывы
     lunches = set()
     for hours in j['workingHours']:
         if hours["beginWorkTime"] and hours["lunches"]:
@@ -110,11 +118,12 @@ def office_click_handler(message):
     if len(lunches) == 1:        
         message_output += f"\n⏳ Перерыв {list(lunches)[0]}\n"
     
+    # Отправляем местоположение отделения на карте и информацию о нём
     location_msg = bot.send_location(message.chat.id, j["latitude"], j["longitude"], reply_to_message_id=message.id)
     bot.send_message(message.chat.id, message_output, reply_to_message_id=location_msg.id)
 
 @bot.message_handler(func=lambda x: True)
 def message_black_hole(message):
-    bot.send_message(message.chat.id, "Извините, команда не была распознана. Выберите действие:", reply_markup=main_menu())
+    bot.send_message(message.chat.id, "Извините, команда не была распознана. Возвращаемся в главное меню.", reply_markup=main_menu())
 
 bot.infinity_polling()
