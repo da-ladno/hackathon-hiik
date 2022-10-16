@@ -100,8 +100,10 @@ def office_click_handler(message):
     message_output += f"Среда: {'Закрыто' if not j['workingHours'][2]['beginWorkTime'] else j['workingHours'][2]['beginWorkTime'] + ' - ' +  j['workingHours'][2]['endWorkTime']}  \n" 
     message_output += f"Четверг: {'Закрыто' if not j['workingHours'][3]['beginWorkTime'] else j['workingHours'][3]['beginWorkTime'] + ' - ' +  j['workingHours'][3]['endWorkTime']} \n" 
     message_output += f"Пятница: {'Закрыто' if not j['workingHours'][4]['beginWorkTime'] else j['workingHours'][4]['beginWorkTime'] + ' - ' +  j['workingHours'][4]['endWorkTime']}  \n" 
-    message_output += f"Суббота: {'Закрыто' if not j['workingHours'][5]['beginWorkTime'] else j['workingHours'][5]['beginWorkTime'] + ' - ' +  j['workingHours'][5]['endWorkTime']}  \n" 
-    message_output += f"Воскресенье: {'Закрыто' if not j['workingHours'][6]['beginWorkTime'] else j['workingHours'][6]['beginWorkTime'] + ' - ' +  j['workingHours'][6]['endWorkTime']} \n" 
+    if len(j['workingHours']) >= 6:
+        message_output += f"Суббота: {'Закрыто' if not j['workingHours'][5]['beginWorkTime'] else j['workingHours'][5]['beginWorkTime'] + ' - ' +  j['workingHours'][5]['endWorkTime']}  \n" 
+    if len(j['workingHours']) >= 7:
+        message_output += f"Воскресенье: {'Закрыто' if not j['workingHours'][6]['beginWorkTime'] else j['workingHours'][6]['beginWorkTime'] + ' - ' +  j['workingHours'][6]['endWorkTime']} \n" 
     
     lunches = set()
     for hours in j['workingHours']:
