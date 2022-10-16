@@ -1,7 +1,4 @@
-import { useState } from "react";
-
-function Slider() {
-    const [sliderValue = 5, setInputValue] = useState("");
+function Slider({sliderValue, setInputValue}) {
     const handleChange = (event) => {
         setInputValue(event.target.value);
     }
