@@ -2,3 +2,5 @@ fastapi
 pyproj
 haversine
 httpx
+timezonefinder
+pytz
