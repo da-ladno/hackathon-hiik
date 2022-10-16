@@ -47,17 +47,21 @@ function App() {
 
   return (
     <div>
-        <Header />
+          <Header />
+          <div class="container">
         <MyMap res={res} pushRefs={pushRefs} setMapRef={setMapRef} mapCenter={mapCenter} circleGeometry={circleGeometry} refs={refs} setMarkRef={setMarkRef} markRef={markRef} markGeometry={markGeometry} setMarkGeometry={setMarkGeometry} />
         <div className={'findPanel'}>
           <div className={'findButton'}><button onClick={() => { handleButtonClick(markRef) }}>Найти</button></div>
           <Slider />
         </div>
-        <ul>
-          {res.map((office,index) => 
-            <li key={office.postalCode} onClick={() => {handleClick(refs,index,office)}}>{office.address.fullAddress}</li>
-          )}
-        </ul>
+          <div class="tableList">
+              <div class="box">
+                  <ol class="square">
+                      {res.map((office, index) =>
+                          <li key={office.postalCode} onClick={() => { handleClick(refs, index, office) }}>{office.address.fullAddress}</li>
+                      )}
+                  </ol> </div>
+          </div> </div>
         <Footer />
     </div>
   );
