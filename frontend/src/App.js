@@ -50,14 +50,16 @@ function App() {
   const handleButtonClick = async (markRef, refs) => {
     setRes([])
     const [latitude, longitude] = markRef.geometry.getCoordinates();
-    fetch(`http://176.126.103.192:8000/get_offices?latitude=${latitude}&longitude=${longitude}&radius=${sliderValue}`)
+    fetch(`http://176.126.103.192:8000/get_offices?latitude=${latitude}&longitude=${longitude}&radius=${sliderValue}&return_closed=true`)
       .then((response) => response.json())
       .then((data) => {setRes(data.postOffices); setMapCenter([latitude,longitude])})
   }
 
   return (
     <div>
+      <div className="wrap">
         <Header />
+        <div className="main">
         <MyMap res={res} 
         setMapRef={setMapRef} 
         mapCenter={mapState} 
@@ -76,17 +78,16 @@ function App() {
         setModalObject={setModalObject}
         />
         <div className={'findPanel'}>
-          <div className={'findButton'}><button onClick={() => { handleButtonClick(markRef) }}>Найти</button></div>
+          <button onClick={() => { handleButtonClick(markRef) }}>Найти</button>
           <Slider sliderValue={sliderValue} setInputValue={setInputValue}/>
         </div>
-        <div className="tableList">
-              <div className="box">
-                  <ol className="square">
-                      {res.map((office, index) =>
-                          <li key={office.postalCode} onClick={() => {handleClick(index,office)}}>{office.address.fullAddress}</li>
-                      )}
-                  </ol> </div>
-          </div> 
+            <ol className="tableList">
+                {res.map((office, index) =>
+                    <li key={office.postalCode} onClick={() => {handleClick(index,office)}}>{office.address.fullAddress === '' ? 'Адрес неизвестен' : office.address.fullAddress}</li>
+                )}
+            </ol>
+            </div>
+            </div>
         <Footer />
         <Modal active={active} setActive={setActive} setBadGeo={setBadGeo} modalObject={modalObject}/>
     </div>

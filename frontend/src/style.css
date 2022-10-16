@@ -48,6 +48,18 @@ header {
     
 }
 
+html, body {
+    height: 100%;
+  }
+
+.wrap {
+    min-height: 100%;
+}
+
+.main {
+    padding-bottom: 59px;
+}
+
 body {
     font-family: Golos, sans-serif;
     font-size: 16px;
@@ -61,7 +73,8 @@ a:hover {
 
 .footer {
     width: 100%;
-    max-height: 250px;
+    height: 59px;
+    margin-top: 59px;
     color: rgb(127, 133, 166);
     font: 14px Golos;   
     text-align: center;
@@ -104,34 +117,35 @@ button {
     
 }
 
-    button:active {
-        color: rgba(255, 255, 255, 0.94);
-        background: rgb(26, 50, 209);
-       
-    }
+button:active {
+    color: rgba(255, 255, 255, 0.94);
+    background: rgb(26, 50, 209);
+    
+}
 
 
 .findPanel {
     padding-bottom: 15px;
     line-height: 10px;
-    margin: 0px 0px 0px 5%;
     width: 90%;
     min-width: 300px;
     display: flex;
     align-items: center;
     text-align: center;
     justify-content: center;
-    grid-template-columns: 100px auto;
+    margin: 0 auto;
 }
 
-.findButton {
-    margin-top: 15px;
+@media screen and (max-width:400px) {
+    .findPanel {
+        flex-direction: column;
+        line-height: 35px;
+    }
 }
 
 .slider {
     padding: 3px 15px 0px 5px;
     display: flex;
-    grid-template-columns: auto auto auto;
 }
 
 .slider input {
@@ -211,7 +225,7 @@ p,h4,li,ul {
 .modal-content {
     font-family: 'Manrope', sans-serif;
     position: relative;
-    background: white;
+    background: rgb(247, 247, 247);
 }
 
 .modal .header {
@@ -220,13 +234,14 @@ p,h4,li,ul {
     display: flex;
     flex-direction: column;
     align-items: center;
+    line-height: 35px;
 }
 
 .open {
     color: rgb(26, 50, 209);
 }
 
-.close {
+.closed {
     color: red;
 }
 
@@ -241,8 +256,6 @@ p,h4,li,ul {
 
 .schedule li {
     text-align: center;
-    /* border-top: 1px solid blue;
-    border-bottom: 1px solid blue; */
     background: rgb(241, 241, 241);
     padding: 10px 0;
 }
@@ -257,18 +270,16 @@ p,h4,li,ul {
 
 .modal-content .close {
     position: absolute;
-    right: 2px;
-    top: 2px;
-    width: 20px;
-    height: 20px;
+    right: -4px;
+    top: 0;
     background: transparent;
-    border: none
+    border: none;
 }
 
 .modal-content .close::before,
 .modal-content .close::after {
     content: '';
-    width: 100%;
+    width: 70%;
     height: 7%;
     background-color: black;
     position: absolute;
@@ -292,10 +303,10 @@ p,h4,li,ul {
     align-items: center;
 }
 
-.modal ul {
+.modal .header,
+.modal .modal-footer {
     padding: 10px 0;
 }
-
 @media screen and (min-width:900px) {
     .modal .header, .modal .modal-footer  {
         flex-direction: row;
@@ -319,95 +330,48 @@ p,h4,li,ul {
 }
 
 
-.tableList {
-    list-style: none;
-    border-collapse: collapse;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: stretch;
-    margin: 10px;
-    width: 800px;
-    justify-content: center;
-    align-items: center;
-    max-height:400px;
-    
-    overflow-y:auto;
-}
-
-    .tableList li:hover {
-        background: #cbbfbf;
-        cursor: pointer;
-        box-sizing: border-box;
-        flex: 1 1 0%;
-        position: relative;
-        overflow: auto;
-        transition: background-color 0.2s
+    .tableList {
+        list-style: none;
+        margin: 0 auto;
+        width: 90%;
+        max-width: 540px;
+        max-height:400px;
+        overflow-y: auto;
     }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: center;
-    
-}
-
-.square {
-    margin: 0;
-    counter-reset: li;
-    list-style: none;
-    padding: 10px;
-    
-    font-family: "Trebuchet MS", "Lucida Sans";
-}
-
-    .square li {
+    .tableList li {
         position: relative;
-        margin: 0 0 0px 2em;
         border-top: 0.5px solid #e6e8fb59;
         border-bottom: 0.5px solid #e6e8fb59;
         transition: .3s linear;
-        flex-direction: row;
-        flex-wrap: wrap;
         align-items: stretch;
-        height: 40px;
-        padding-left:15px;
-
+        min-height: 40px;
+        padding: 5px;
+        overflow: auto;
     }
 
-        .square li:last-child {
-            margin-bottom: 0;
-        }
+    .tableList li:last-child {
+        margin-bottom: 0;
+    }
+
+    .tableList li:hover {
+        border-top: 0.5px solid rgba(26, 50, 209, .4);
+        border-bottom: 0.5px solid rgba(26, 50, 209, .4);
+        background: #e6e8fb;
+    }
 
 
+    .tableList::-webkit-scrollbar {
+        width: none; 
+        height: 4px; 
+        background-color: #e6e8fb;
+        
+    }
 
-        .square li:hover {
-            border-top: 0.5px solid rgb(26, 50, 209);
-            border-bottom: 0.5px solid rgb(26, 50, 209);
-            height: 40px;
-            background: #e6e8fb;
-        }
-
-            .square li:hover:before {
-                border: 0.5px solid #389F70;
-                background: #e6e8fb;
-                height: 40px;
-            }
-.tableList::-webkit-scrollbar {
-    width: none; /* ������ ��� ������������� ������� */
-    
-    height: 4px; /* ������ ��� ��������������� ������� */
-    background-color: #e6e8fb;
-    
-}
-
-/* �������� ���������� */
-.tableList::-webkit-scrollbar-thumb {
-    background-color: rgb(26, 50, 209);
-    border-radius: 9em;
-}
+    .tableList::-webkit-scrollbar-thumb {
+        background-color: rgb(26, 50, 209);
+        border-radius: 9em;
+    }
 
     .tableList::-webkit-scrollbar-thumb:hover {
         background-color: #253861;

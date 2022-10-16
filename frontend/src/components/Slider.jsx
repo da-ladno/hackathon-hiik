@@ -4,7 +4,7 @@ function Slider({sliderValue, setInputValue}) {
     }
     return (
         <div className={'slider'}>
-            <div className={'sliderText'}>в радиусе:</div>
+            {/* <div className={'sliderText'}>в радиусе:</div> */}
             <div>
                 <datalist id='sliderValues' className={'sliderValues'} >
                     <option value="1">1</option>
@@ -20,7 +20,7 @@ function Slider({sliderValue, setInputValue}) {
                 </datalist>
                 <input className={'slider'} type='range' min='1' max='10' value={sliderValue} step='1' onChange={handleChange} />
             </div>
-            <div className={'sliderText'}>км</div>
+            {/* <div className={'sliderText'}>км</div> */}
         </div>
     );
 }
