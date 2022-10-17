@@ -3,7 +3,7 @@ import { YMaps, Map, GeolocationControl, Placemark, Circle, SearchControl} from 
 import MyPlacemark from './MyPlacemark';
 
 const MyMap = ({res, 
-  pushRefs, 
+  setRefs, 
   // setMapRef, 
   mapCenter, 
   circleGeometry, 
@@ -45,12 +45,10 @@ const MyMap = ({res,
             float: 'left'
           }}
           />
-          {res.map((office,index) => 
+          {res.map((office) => 
             <MyPlacemark key={office.postalCode} 
-            res={res} 
             office={office} 
-            index={index} 
-            pushRefs={pushRefs} 
+            setRefs={setRefs} 
             setActive={setActive}
             setBadGeo={setBadGeo}
             setModalObject={setModalObject}

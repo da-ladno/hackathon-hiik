@@ -3,7 +3,6 @@ import Footer from "./components/Footer"
 import './style.css'
 import './normalize.css'
 import Header from "./components/Header";
-import Loader from "./components/Loader";
 import { useState, useMemo } from "react";
 import Slider from "./components/Slider";
 import Modal from "./components/Modal";
@@ -14,11 +13,11 @@ function App() {
   const [circleGeometry,setCircleGeometry] = useState([55.75, 37.57])
   const [markGeometry,setMarkGeometry] = useState([55.75, 37.57])
   const [res,setRes] = useState([]);
-  const [isLoading, setIsLoading] = useState(false)
   const [sliderValue, setInputValue] = useState(5)
   const [active,setActive] = useState(false)
   const [badGeo, setBadGeo] = useState([[0,0],[0,0]])
   const [modalObject, setModalObject] = useState({})
+  const [refs,setRefs] = useState([])
 
   const mapState = useMemo(
     () => ({ center: mapCenter, zoom:9 }),
@@ -26,16 +25,6 @@ function App() {
   );
 
   let markRef;
-  let mapRef;
-
-  const refs = []
-  const pushRefs = (inst) => {
-    refs.push(inst)
-  }
-
-  const setMapRef = (inst) => {
-    mapRef = inst
-  }
 
   const setMarkRef = (inst) => {
     markRef = inst
@@ -47,7 +36,7 @@ function App() {
     getOfficeInfo(setModalObject,res[index].postalCode, Math.floor(Date.now() / 1000),setActive)
   }
   
-  const handleButtonClick = async (markRef, refs) => {
+  const handleButtonClick = (markRef) => {
     setRes([])
     const [latitude, longitude] = markRef.geometry.getCoordinates();
     fetch(`http://176.126.103.192:8000/get_offices?latitude=${latitude}&longitude=${longitude}&radius=${sliderValue}&return_closed=true`)
@@ -61,7 +50,6 @@ function App() {
       <div className="main">
         <div className="main">
         <MyMap res={res} 
-        setMapRef={setMapRef} 
         mapCenter={mapState} 
         circleGeometry={circleGeometry} 
         setMarkRef={setMarkRef} 
@@ -71,14 +59,14 @@ function App() {
         sliderValue={sliderValue} 
         setCircleGeometry={setCircleGeometry}
         setActive={setActive}
-        pushRefs={pushRefs}
+        setRefs={setRefs}
         refs={refs}
         badGeo={badGeo}
         setBadGeo={setBadGeo}
         setModalObject={setModalObject}
         />
         <div className={'findPanel'}>
-          <button onClick={() => { handleButtonClick(markRef) }}>Найти</button>
+          <button onClick={() => { handleButtonClick(markRef)}}>Найти</button>
           <Slider sliderValue={sliderValue} setInputValue={setInputValue}/>
         </div>
             <ol className="tableList">
