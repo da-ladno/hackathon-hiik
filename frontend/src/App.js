@@ -66,8 +66,15 @@ function App() {
         setModalObject={setModalObject}
         />
         <div className={'findPanel'}>
-          <button onClick={() => { handleButtonClick(markRef)}}>Найти</button>
-          <Slider sliderValue={sliderValue} setInputValue={setInputValue}/>
+          <div style={{display:'flex', flexWrap:'nowrap', height:'40px', alignItems:'center'}}>
+            <button onClick={() => { handleButtonClick(markRef) }}>Найти</button>
+            <div className={'sliderText'}>в радиусе:</div>
+          </div>
+          <div style={{display:'flex', flexWrap:'nowrap'}}>
+            <Slider sliderValue={sliderValue} setInputValue={setInputValue}/>
+            <div className={'sliderText'} style={{alignSelf:'center'}}>км</div>
+          </div>
+
         </div>
             <ol className="tableList">
                 {res.map((office, index) =>
@@ -75,7 +82,6 @@ function App() {
                 )}
             </ol>
         </div>
-        
       </div>
       <Footer />
       <Modal active={active} setActive={setActive} setBadGeo={setBadGeo} modalObject={modalObject}/>
