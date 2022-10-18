@@ -9,8 +9,6 @@ const MyPlacemark = React.memo(({office, setActive, setRefs, setBadGeo, setModal
         getOfficeInfo(setModalObject,office.postalCode, Math.floor(Date.now() / 1000),setActive)
       }
 
-      console.log('rendered')
-
   return (
     <Placemark 
     geometry={[office.latitude,office.longitude]}
