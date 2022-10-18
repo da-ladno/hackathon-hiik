@@ -38,6 +38,8 @@ function App() {
   
   const handleButtonClick = (markRef) => {
     setRes([])
+    setBadGeo([[0,0],[0,0]])
+    setActive(false)
     const [latitude, longitude] = markRef.geometry.getCoordinates();
     fetch(`http://176.126.103.192:8000/get_offices?latitude=${latitude}&longitude=${longitude}&radius=${sliderValue}&return_closed=true`)
       .then((response) => response.json())
