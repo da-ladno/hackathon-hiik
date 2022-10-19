@@ -23,23 +23,17 @@ function App() {
     [mapCenter]
   );
 
-  let markRef;
-
-  const setMarkRef = (inst) => {
-    markRef = inst
-  }
-
   const handleClick = (index,office) => {
     setMapCenter([office.latitude,office.longitude])
     setBadGeo([[office.latitude,office.longitude],[30,42]])
     getOfficeInfo(setModalObject,res[index].postalCode, Math.floor(Date.now() / 1000),setActive)
   }
   
-  const handleButtonClick = (markRef) => {
+  const handleButtonClick = () => {
     setRes([])
     setBadGeo([[0,0],[0,0]])
     setActive(false)
-    const [latitude, longitude] = markRef.geometry.getCoordinates();
+    const [latitude, longitude] = markGeometry;
     fetch(`http://176.126.103.192:8000/get_offices?latitude=${latitude}&longitude=${longitude}&radius=${sliderValue}&return_closed=true`)
       .then((response) => response.json())
       .then((data) => {setRes(data.postOffices); setMapCenter([latitude,longitude])})
@@ -53,8 +47,6 @@ function App() {
         <MyMap res={res} 
         mapCenter={mapState} 
         circleGeometry={circleGeometry} 
-        setMarkRef={setMarkRef} 
-        markRef={markRef} 
         markGeometry={markGeometry} 
         setMarkGeometry={setMarkGeometry} 
         sliderValue={sliderValue} 
@@ -66,7 +58,7 @@ function App() {
         />
         <div className={'findPanel'}>
           <div style={{display:'flex', flexWrap:'nowrap', height:'40px', alignItems:'center'}}>
-            <button onClick={() => { handleButtonClick(markRef) }}>Найти</button>
+            <button onClick={handleButtonClick}>Найти</button>
             <div className={'sliderText'}>в радиусе:</div>
           </div>
           <div style={{display:'flex', flexWrap:'nowrap'}}>

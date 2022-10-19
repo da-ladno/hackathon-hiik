@@ -5,7 +5,6 @@ import MyPlacemark from './MyPlacemark';
 const MyMap = ({res, 
   mapCenter, 
   circleGeometry, 
-  setMarkRef, 
   markGeometry, 
   setMarkGeometry, 
   sliderValue, 
@@ -65,7 +64,7 @@ const MyMap = ({res,
             float: 'right',
             noPlacemark:'true'
           }} />
-          <Placemark geometry={markGeometry} instanceRef={inst => setMarkRef(inst)}/>
+          <Placemark geometry={markGeometry}/>
           <Placemark 
             geometry={badGeo[0]}
             options={{
