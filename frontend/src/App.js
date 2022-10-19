@@ -17,7 +17,6 @@ function App() {
   const [active,setActive] = useState(false)
   const [badGeo, setBadGeo] = useState([[0,0],[0,0]])
   const [modalObject, setModalObject] = useState({})
-  const [refs,setRefs] = useState([])
 
   const mapState = useMemo(
     () => ({ center: mapCenter, zoom:9 }),
@@ -61,8 +60,6 @@ function App() {
         sliderValue={sliderValue} 
         setCircleGeometry={setCircleGeometry}
         setActive={setActive}
-        setRefs={setRefs}
-        refs={refs}
         badGeo={badGeo}
         setBadGeo={setBadGeo}
         setModalObject={setModalObject}

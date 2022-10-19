@@ -3,8 +3,6 @@ import { YMaps, Map, GeolocationControl, Placemark, Circle, SearchControl} from 
 import MyPlacemark from './MyPlacemark';
 
 const MyMap = ({res, 
-  setRefs, 
-  // setMapRef, 
   mapCenter, 
   circleGeometry, 
   setMarkRef, 
@@ -48,7 +46,6 @@ const MyMap = ({res,
           {res.map((office) => 
             <MyPlacemark key={office.postalCode} 
             office={office} 
-            setRefs={setRefs} 
             setActive={setActive}
             setBadGeo={setBadGeo}
             setModalObject={setModalObject}

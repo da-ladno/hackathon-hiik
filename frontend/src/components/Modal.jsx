@@ -10,7 +10,7 @@ const Modal = ({active, setActive, setBadGeo, modalObject}) => {
 <div className="modal">
     <div className="modal-content">
         <ul className="header">
-            <li>{modalObject.typeCode === 'ГОПС' ? 'Отделение' : 'Почтомат' }</li>
+            <li>{modalObject.typeCode === 'ГОПС' || 'СОПС' ? 'Отделение' : 'Почтомат' }</li>
             <li>{modalObject.postalCode}</li>
             <li>{modalObject.addressSource}</li>
             <li className={modalObject.isClosed ? 'closed' : 'open'}>{modalObject.isClosed ? 'Закрыто' : 'Открыто'}</li>

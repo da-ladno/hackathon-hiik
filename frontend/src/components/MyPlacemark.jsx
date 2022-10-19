@@ -2,7 +2,7 @@ import React from 'react'
 import { Placemark } from "@pbe/react-yandex-maps";
 import getOfficeInfo from '../api/getOfficeInfo';
 
-const MyPlacemark = React.memo(({office, setActive, setRefs, setBadGeo, setModalObject}) => {
+const MyPlacemark = React.memo(({office, setActive, setBadGeo, setModalObject}) => {
 
     const placemarkHandler = () => {
         setBadGeo([[office.latitude,office.longitude],[30,42]])
@@ -18,7 +18,6 @@ const MyPlacemark = React.memo(({office, setActive, setRefs, setBadGeo, setModal
      iconImageHref:'PochtaRossiiMarkBlue.png'
    }}
    onClick={placemarkHandler}
-   instanceRef={inst => {setRefs((refs) => [...refs,inst])}}
     />
   )
 })
